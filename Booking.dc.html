@@ -29,6 +29,7 @@
     .bookingSteps > div > div:first-child span:last-child { font-size:8px !important; letter-spacing:0.8px !important; }
     .bookingSteps > div > div:nth-child(2) { width:14px !important; }
     .bookingContent { padding-top:104px !important; }
+    .bookingContent.hasMobileServiceBar { padding-bottom:118px !important; }
     .bookingGrid { grid-template-columns:1fr !important; padding:34px 20px !important; gap:28px !important; }
     .bookingStep { padding:34px 20px !important; max-width:100% !important; }
     .bookingStep h1, .bookingGrid h1 { font-size:40px !important; line-height:1.05 !important; letter-spacing:0 !important; }
@@ -54,6 +55,10 @@
     .summaryCard > div { gap:14px; }
     .confirmForm > div { padding:17px 18px !important; }
     .bookingStep > button[data-action="continue"], .bookingGrid button[data-action="continue"] { min-height:52px; }
+    .mobileServiceBar { position:fixed;left:0;right:0;bottom:0;z-index:80;display:flex !important;align-items:center;justify-content:space-between;gap:16px;padding:18px 18px calc(18px + env(safe-area-inset-bottom));background:#f0ebe3;color:#141211;border-top:1px solid rgba(20,18,17,0.12);box-shadow:0 -18px 48px rgba(0,0,0,0.26);animation:fadeUp 0.24s ease both; }
+    .mobileServiceBarTotal { font-family:'DM Sans',sans-serif;font-size:31px;font-weight:700;line-height:1;color:#141211;letter-spacing:-1px;margin-bottom:10px; }
+    .mobileServiceBarMeta { display:flex;align-items:center;gap:9px;color:rgba(20,18,17,0.55);font-size:21px;font-weight:400;white-space:nowrap; }
+    .mobileServiceBarButton { min-width:154px;min-height:58px;border:0;border-radius:999px;background:#141211;color:#f0ebe3;font-family:'DM Sans',sans-serif;font-size:22px;font-weight:700;letter-spacing:-0.5px;display:inline-flex;align-items:center;justify-content:center;gap:16px;cursor:pointer; }
   }
   @media (max-width: 390px) {
     .bookingTopbar { padding-left:12px !important; padding-right:12px !important; }
@@ -61,6 +66,10 @@
     .bookingGrid, .bookingStep { padding-left:16px !important; padding-right:16px !important; }
     .bookingStep h1, .bookingGrid h1 { font-size:36px !important; }
     .dateRow { gap:3px !important; }
+    .mobileServiceBar { padding-left:14px;padding-right:14px;gap:12px; }
+    .mobileServiceBarTotal { font-size:28px; }
+    .mobileServiceBarMeta { font-size:18px; }
+    .mobileServiceBarButton { min-width:142px;font-size:20px; }
   }
 </style>
 </head>
@@ -297,6 +306,20 @@ function renderStep0() {
   `;
 }
 
+function renderMobileServiceBar() {
+  if (state.booked || state.step !== 0 || state.selectedServices.length === 0) return "";
+  const count = state.selectedServices.length;
+  return `
+    <div class="mobileServiceBar" style="display:none">
+      <div>
+        <div class="mobileServiceBarTotal">JOD ${totalPrice()}</div>
+        <div class="mobileServiceBarMeta"><svg width="25" height="25" viewBox="0 0 24 24" aria-hidden="true" style="display:block;flex-shrink:0"><path d="M4 5h2l2.3 10.2a2 2 0 0 0 2 1.6h6.8a2 2 0 0 0 1.9-1.4l1.4-5.4H7.2" fill="none" stroke="rgba(20,18,17,0.55)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><circle cx="10" cy="20" r="1.2" fill="rgba(20,18,17,0.55)"/><circle cx="17" cy="20" r="1.2" fill="rgba(20,18,17,0.55)"/></svg><span>${count} ${count === 1 ? "item" : "items"}</span><span>·</span><span>${totalDuration()} mins</span></div>
+      </div>
+      <button class="mobileServiceBarButton" data-action="continue">Continue <span style="font-size:34px;line-height:1">→</span></button>
+    </div>
+  `;
+}
+
 function renderStep1() {
   const barberCards = BARBERS.map(barber => {
     const selected = state.selectedBarber === barber.id;
@@ -454,9 +477,11 @@ function renderContent() {
 }
 
 function render() {
+  const hasMobileServiceBar = !state.booked && state.step === 0 && state.selectedServices.length > 0;
   app.innerHTML = `
     ${renderTopBar()}
-    <div class="bookingContent" style="padding-top:68px;min-height:100vh">${renderContent()}</div>
+    <div class="bookingContent${hasMobileServiceBar ? " hasMobileServiceBar" : ""}" style="padding-top:68px;min-height:100vh">${renderContent()}</div>
+    ${renderMobileServiceBar()}
   `;
 }
 
