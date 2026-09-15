@@ -92,8 +92,20 @@
   }
   .primaryCta:hover { background: #b8956a !important; }
   .hero-section { isolation: isolate; }
-  .hero-video { position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%; object-fit: cover; object-position: center; opacity: .58; }
-  .hero-section::after { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(180deg, rgba(20,18,17,.55), rgba(20,18,17,.72)); pointer-events: none; }
+  .hero-video { position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%; object-fit: cover; object-position: center; opacity: .72; }
+  .hero-section::after { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(180deg, rgba(20,18,17,.28), rgba(20,18,17,.45)); pointer-events: none; }
+  @media (max-width: 1024px) {
+    .site-brand-name { display: none; }
+  }
+  @media (max-width: 1100px) {
+    #navCta { display: none; }
+  }
+  @media (max-width: 950px) {
+    #navLinks a[href="#contact"] { display: none; }
+  }
+  @media (max-width: 850px) {
+    #navLinks a[href="#gallery"] { display: none; }
+  }
   .work-scroll-container { height: 260vh; position: relative; }
   .work-sticky { position: sticky; top: 0; height: 100svh; display: flex; align-items: center; overflow: hidden; }
   .work-gallery { display: flex; gap: 30px; width: max-content; padding: 0 8vw; will-change: transform; }
@@ -109,10 +121,9 @@
     .work-gallery { transform: none !important; }
   }
   @media (max-width: 760px) {
-    .work-scroll-container { height: auto; }
-    .work-sticky { position: relative; height: auto; overflow-x: auto; overflow-y: hidden; padding: 8px 0 28px; -webkit-overflow-scrolling: touch; overscroll-behavior-x: contain; scrollbar-width: none; }
-    .work-sticky::-webkit-scrollbar { display: none; }
-    .work-gallery { gap: 14px; padding: 0 20px; transform: none !important; }
+    .work-scroll-container { height: 280vh; }
+    .work-sticky { position: sticky; top: 0; height: 100svh; overflow: hidden; padding: 0; }
+    .work-gallery { gap: 14px; padding: 0 20px; }
     .work-card { flex-basis: min(78vw, 340px); height: min(62svh, 430px); }
     .work-card-content { left: 20px; bottom: 20px; }
     .work-card h3 { font-size: 24px; }
@@ -188,6 +199,15 @@
     footer { padding: 30px 20px !important; }
     footer > div { flex-direction: column; align-items: flex-start !important; gap: 18px; }
   }
+  @media (max-width: 600px) {
+    #mobileMenu a[href="https://www.fresha.com/a/wild-deer-barbershop-amman-roys-road-vhkrofj6/all-offer?venue=true"] { display: none; }
+  }
+  @media (max-width: 480px) {
+    #mobileMenu a[href="#contact"] { display: none; }
+  }
+  @media (max-width: 380px) {
+    #mobileMenu a[href="#gallery"] { display: none; }
+  }
   @media (max-width: 420px) {
     body > section:nth-of-type(1) h1 { font-size: 36px !important; letter-spacing: 6px !important; }
     body > section:nth-of-type(1) img { height: 86px !important; }
@@ -209,7 +229,7 @@
 <nav id="siteNav" style="position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:24px 48px;transition:all 0.4s ease;background:transparent">
   <div style="display:flex;align-items:center;gap:14px">
     <img src="uploads/ChatGPT Image Jun 24, 2026, 02_52_35 AM (2).png" style="height:40px;width:auto" alt="Wild Deer">
-    <span style="font-family:'DM Sans',sans-serif;font-size:11px;font-weight:600;letter-spacing:4px;color:#f0ebe3;text-transform:uppercase">Wild Deer</span>
+    <span class="site-brand-name" style="font-family:'DM Sans',sans-serif;font-size:11px;font-weight:600;letter-spacing:4px;color:#f0ebe3;text-transform:uppercase">Wild Deer</span>
   </div>
   <div id="navLinks" style="display:flex;align-items:center;gap:36px">
     <a href="#services" style="font-family:'DM Sans',sans-serif;font-size:11px;font-weight:500;letter-spacing:3px;color:#f0ebe3;text-decoration:none;text-transform:uppercase;transition:opacity 0.3s" onmouseover="this.style.opacity='0.6'" onmouseout="this.style.opacity='1'">Services</a>
@@ -456,9 +476,15 @@
 
   const workScroll = document.querySelector('.work-scroll-container');
   const workGallery = document.querySelector('.work-gallery');
+  const heroVideo = document.querySelector('.hero-video');
+  if (heroVideo) {
+    heroVideo.defaultPlaybackRate = 0.75;
+    heroVideo.playbackRate = 0.75;
+    heroVideo.addEventListener('play', () => { heroVideo.playbackRate = 0.75; });
+  }
   let workFramePending = false;
   function updateWorkGallery() {
-    if (!workScroll || !workGallery || window.matchMedia('(prefers-reduced-motion: reduce), (max-width: 760px)').matches) {
+    if (!workScroll || !workGallery || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
       if (workGallery) workGallery.style.transform = 'none';
       return;
     }
