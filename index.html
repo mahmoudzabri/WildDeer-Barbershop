@@ -250,7 +250,7 @@
 
 <section class="hero-section" style="min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;background:#141211;overflow:hidden">
   <video class="hero-video" autoplay muted loop playsinline preload="metadata" aria-hidden="true">
-    <source src="uploads/wild-deer-hero.mp4" type="video/mp4">
+    <source src="uploads/Main-vid.mp4" type="video/mp4">
   </video>
   <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 50% 30%, rgba(139,125,107,0.06) 0%, transparent 70%)"></div>
   <div style="position:absolute;top:0;left:50%;width:1px;height:120px;background:linear-gradient(to bottom, transparent, rgba(184,149,106,0.3), transparent)"></div>
@@ -478,9 +478,9 @@
   const workGallery = document.querySelector('.work-gallery');
   const heroVideo = document.querySelector('.hero-video');
   if (heroVideo) {
-    heroVideo.defaultPlaybackRate = 0.75;
-    heroVideo.playbackRate = 0.75;
-    heroVideo.addEventListener('play', () => { heroVideo.playbackRate = 0.75; });
+    heroVideo.defaultPlaybackRate = 0.5;
+    heroVideo.playbackRate = 0.5;
+    heroVideo.addEventListener('play', () => { heroVideo.playbackRate = 0.5; });
   }
   let workFramePending = false;
   function updateWorkGallery() {
