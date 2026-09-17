@@ -84,7 +84,6 @@
     .preloaderMark::after { animation-duration: 1400ms; }
     .sitePreloader.is-hidden { animation-duration: 180ms; }
   }
-  #mobileMenu, #menuToggle { display: none; }
   .primaryCta, .primaryCta:visited, .primaryCta:hover, .primaryCta:active {
     color: #141211 !important;
     background: #f0ebe3 !important;
@@ -94,17 +93,13 @@
   .hero-section { isolation: isolate; }
   .hero-video { position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%; object-fit: cover; object-position: center; opacity: .72; }
   .hero-section::after { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(180deg, rgba(20,18,17,.28), rgba(20,18,17,.45)); pointer-events: none; }
+  #navLinks a { font-size: 12px !important; }
   @media (max-width: 1024px) {
     .site-brand-name { display: none; }
   }
   @media (max-width: 1100px) {
     #navCta { display: none; }
-  }
-  @media (max-width: 950px) {
-    #navLinks a[href="#contact"] { display: none; }
-  }
-  @media (max-width: 850px) {
-    #navLinks a[href="#gallery"] { display: none; }
+    #navLinks { flex: 1; justify-content: space-evenly; gap: clamp(8px, 2vw, 24px) !important; }
   }
   .work-scroll-container { height: 260vh; position: relative; }
   .work-sticky { position: sticky; top: 0; height: 100svh; display: flex; align-items: center; overflow: hidden; }
@@ -131,22 +126,13 @@
   @media (max-width: 760px) {
     html, body { width: 100%; max-width: 100vw; overflow-x: hidden !important; }
     * { min-width: 0; }
-    #siteNav { display: none !important; }
+    #siteNav { display: flex !important; justify-content: space-between !important; padding: 14px 16px !important; }
     #siteNav > div:first-child { gap: 10px !important; min-width: 0; }
     #siteNav > div:first-child img { height: 34px !important; }
     #siteNav > div:first-child span { font-size: 10px !important; letter-spacing: 3px !important; }
-    #navLinks, #navCta { display: none !important; }
-    #menuToggle { display: inline-flex; align-items: center; justify-content: center; min-height: 42px; padding: 0 16px; border: 1px solid rgba(240,235,227,0.16); background: rgba(28,26,24,0.92); color: #f0ebe3; font-family: 'DM Sans', sans-serif; font-size: 10px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; cursor: pointer; -webkit-tap-highlight-color: transparent; }
-    #mobileMenu { display: none !important; }
-    #mobileMenu[aria-hidden="false"] { opacity: 1; visibility: visible; pointer-events: auto; transform: translateY(0) scale(1); transition: opacity 220ms ease, transform 220ms ease, visibility 0s; }
-    #mobileMenu a { min-height: 48px; display: flex; align-items: center; justify-content: space-between; padding: 0 14px; color: #f0ebe3; font-family: 'DM Sans', sans-serif; font-size: 11px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; text-decoration: none; border-bottom: 1px solid rgba(240,235,227,0.05); opacity: 0; transform: translateY(-4px); transition: opacity 180ms ease, transform 180ms ease, background 180ms ease; }
-    #mobileMenu[aria-hidden="false"] a { opacity: 1; transform: translateY(0); }
-    #mobileMenu[aria-hidden="false"] a:nth-child(2) { transition-delay: 25ms; }
-    #mobileMenu[aria-hidden="false"] a:nth-child(3) { transition-delay: 50ms; }
-    #mobileMenu[aria-hidden="false"] a:nth-child(4) { transition-delay: 75ms; }
-    #mobileMenu[aria-hidden="false"] a:nth-child(5) { transition-delay: 100ms; }
-    #mobileMenu a:last-child { background: #f0ebe3; color: #141211; justify-content: center; margin-top: 6px; border-bottom: 0; }
-    body.menu-open { overflow: hidden; }
+    #navLinks { display: flex !important; position: static; transform: none; gap: 14px !important; margin-left: 0; }
+    #navLinks a { font-size: 10px !important; letter-spacing: 1.8px !important; }
+    #navCta { display: none !important; }
     body > section:nth-of-type(1) { min-height: 100svh !important; padding: 54px 20px 70px !important; }
     body > section:nth-of-type(1) > div:nth-of-type(3) { gap: 24px !important; padding: 0 !important; width: 100%; }
     body > section:nth-of-type(1) img { height: 96px !important; }
@@ -200,13 +186,13 @@
     footer > div { flex-direction: column; align-items: flex-start !important; gap: 18px; }
   }
   @media (max-width: 600px) {
-    #mobileMenu a[href="https://www.fresha.com/a/wild-deer-barbershop-amman-roys-road-vhkrofj6/all-offer?venue=true"] { display: none; }
+    #navLinks { gap: 9px !important; }
+    #navLinks a { font-size: 9px !important; letter-spacing: 1.2px !important; }
   }
   @media (max-width: 480px) {
-    #mobileMenu a[href="#contact"] { display: none; }
-  }
-  @media (max-width: 380px) {
-    #mobileMenu a[href="#gallery"] { display: none; }
+    #siteNav { padding-left: 10px !important; padding-right: 10px !important; }
+    #navLinks { gap: 6px !important; }
+    #navLinks a { font-size: 8px !important; letter-spacing: 0.8px !important; }
   }
   @media (max-width: 420px) {
     body > section:nth-of-type(1) h1 { font-size: 36px !important; letter-spacing: 6px !important; }
@@ -238,16 +224,7 @@
     <a href="#contact" style="font-family:'DM Sans',sans-serif;font-size:11px;font-weight:500;letter-spacing:3px;color:#f0ebe3;text-decoration:none;text-transform:uppercase;transition:opacity 0.3s" onmouseover="this.style.opacity='0.6'" onmouseout="this.style.opacity='1'">Contact</a>
   </div>
   <a id="navCta" href="https://www.fresha.com/a/wild-deer-barbershop-amman-roys-road-vhkrofj6/all-offer?venue=true" style="font-family:'DM Sans',sans-serif;font-size:11px;font-weight:600;letter-spacing:3px;color:#141211;text-decoration:none;text-transform:uppercase;background:rgba(240,235,227,0.9);padding:12px 28px;transition:all 0.3s" onmouseover="this.style.opacity='0.85'" onmouseout="this.style.opacity='1'">Book Now</a>
-  <button id="menuToggle" type="button" aria-controls="mobileMenu" aria-expanded="false" onclick="toggleMobileMenu()">Menu</button>
 </nav>
-<div id="mobileMenu" aria-hidden="true">
-  <a href="#services">Services</a>
-  <a href="#experience">Experience</a>
-  <a href="#gallery">Gallery</a>
-  <a href="#contact">Contact</a>
-  <a href="https://www.fresha.com/a/wild-deer-barbershop-amman-roys-road-vhkrofj6/all-offer?venue=true">Book Now</a>
-</div>
-
 <section class="hero-section" style="min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;background:#141211;overflow:hidden">
   <video class="hero-video" autoplay muted loop playsinline preload="metadata" aria-hidden="true">
     <source src="uploads/Main-vid.mp4" type="video/mp4">
@@ -443,26 +420,11 @@
   const sitePreloader = document.getElementById('sitePreloader');
   const nav = document.getElementById('siteNav');
   const bookLink = nav.querySelector('a[href="https://www.fresha.com/a/wild-deer-barbershop-amman-roys-road-vhkrofj6/all-offer?venue=true"]');
-  const menuToggle = document.getElementById('menuToggle');
-  const mobileMenu = document.getElementById('mobileMenu');
 
   function handleScroll() {
     const scrolled = window.scrollY > 60;
     nav.style.background = scrolled ? 'rgba(20,18,17,0.95)' : 'transparent';
     if (bookLink) bookLink.style.background = scrolled ? '#f0ebe3' : 'rgba(240,235,227,0.9)';
-  }
-
-  function setMobileMenu(open) {
-    if (!menuToggle || !mobileMenu) return;
-    mobileMenu.setAttribute('aria-hidden', open ? 'false' : 'true');
-    menuToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
-    menuToggle.textContent = open ? 'Close' : 'Menu';
-    document.body.classList.toggle('menu-open', open);
-  }
-
-  function toggleMobileMenu() {
-    const open = mobileMenu && mobileMenu.getAttribute('aria-hidden') === 'false';
-    setMobileMenu(!open);
   }
 
   function hidePreloader() {
@@ -478,9 +440,9 @@
   const workGallery = document.querySelector('.work-gallery');
   const heroVideo = document.querySelector('.hero-video');
   if (heroVideo) {
-    heroVideo.defaultPlaybackRate = 0.5;
-    heroVideo.playbackRate = 0.5;
-    heroVideo.addEventListener('play', () => { heroVideo.playbackRate = 0.5; });
+    heroVideo.defaultPlaybackRate = 0.9;
+    heroVideo.playbackRate = 0.9;
+    heroVideo.addEventListener('play', () => { heroVideo.playbackRate = 0.9; });
   }
   let workFramePending = false;
   function updateWorkGallery() {
@@ -508,11 +470,6 @@
   window.addEventListener('scroll', handleScroll, { passive: true });
   window.addEventListener('scroll', requestWorkGalleryUpdate, { passive: true });
   window.addEventListener('resize', requestWorkGalleryUpdate);
-  if (mobileMenu) {
-    mobileMenu.querySelectorAll('a').forEach((link) => {
-      link.addEventListener('click', () => setMobileMenu(false));
-    });
-  }
 </script>
 </body>
 </html>
