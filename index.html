@@ -116,19 +116,17 @@
     .work-gallery { transform: none !important; }
   }
   @media (max-width: 760px) {
-    .work-scroll-container { height: auto; }
+    .work-scroll-container { height: 280vh; height: 280dvh; }
     .work-sticky {
-      position: relative;
-      height: auto;
-      overflow-x: auto;
-      overflow-y: hidden;
-      overscroll-behavior-x: contain;
-      -webkit-overflow-scrolling: touch;
-      scroll-snap-type: x mandatory;
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      height: 100dvh;
+      overflow: hidden;
+      padding: 0;
     }
-    .work-gallery { gap: 14px; padding: 0 20px 12px; transform: none !important; }
+    .work-gallery { gap: 14px; padding: 0 20px; }
     .work-card { flex-basis: min(78vw, 340px); height: min(62svh, 430px); }
-    .work-card { scroll-snap-align: start; scroll-snap-stop: always; }
     .work-card-content { left: 20px; bottom: 20px; }
     .work-card h3 { font-size: 24px; }
   }
@@ -469,6 +467,7 @@
   window.setTimeout(hidePreloader, 1500);
 
   const workScroll = document.querySelector('.work-scroll-container');
+  const workSticky = document.querySelector('.work-sticky');
   const workGallery = document.querySelector('.work-gallery');
   const heroVideo = document.querySelector('.hero-video');
   if (heroVideo) {
@@ -478,12 +477,11 @@
   }
   let workFramePending = false;
   function updateWorkGallery() {
-    const usesNativeMobileGallery = window.matchMedia('(max-width: 760px)').matches;
-    if (!workScroll || !workGallery || usesNativeMobileGallery || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    if (!workScroll || !workSticky || !workGallery || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
       if (workGallery) workGallery.style.transform = 'none';
       return;
     }
-    const maxScroll = workScroll.offsetHeight - window.innerHeight;
+    const maxScroll = workScroll.offsetHeight - workSticky.offsetHeight;
     if (maxScroll <= 0) return;
     const progress = Math.min(1, Math.max(0, -workScroll.getBoundingClientRect().top / maxScroll));
     const distance = Math.max(0, workGallery.scrollWidth - window.innerWidth);
@@ -503,6 +501,7 @@
   window.addEventListener('scroll', handleScroll, { passive: true });
   window.addEventListener('scroll', requestWorkGalleryUpdate, { passive: true });
   window.addEventListener('resize', requestWorkGalleryUpdate);
+  window.visualViewport?.addEventListener('resize', requestWorkGalleryUpdate);
 </script>
 </body>
 </html>
