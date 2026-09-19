@@ -116,10 +116,19 @@
     .work-gallery { transform: none !important; }
   }
   @media (max-width: 760px) {
-    .work-scroll-container { height: 280vh; }
-    .work-sticky { position: sticky; top: 0; height: 100svh; overflow: hidden; padding: 0; }
-    .work-gallery { gap: 14px; padding: 0 20px; }
+    .work-scroll-container { height: auto; }
+    .work-sticky {
+      position: relative;
+      height: auto;
+      overflow-x: auto;
+      overflow-y: hidden;
+      overscroll-behavior-x: contain;
+      -webkit-overflow-scrolling: touch;
+      scroll-snap-type: x mandatory;
+    }
+    .work-gallery { gap: 14px; padding: 0 20px 12px; transform: none !important; }
     .work-card { flex-basis: min(78vw, 340px); height: min(62svh, 430px); }
+    .work-card { scroll-snap-align: start; scroll-snap-stop: always; }
     .work-card-content { left: 20px; bottom: 20px; }
     .work-card h3 { font-size: 24px; }
   }
@@ -469,7 +478,8 @@
   }
   let workFramePending = false;
   function updateWorkGallery() {
-    if (!workScroll || !workGallery || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    const usesNativeMobileGallery = window.matchMedia('(max-width: 760px)').matches;
+    if (!workScroll || !workGallery || usesNativeMobileGallery || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
       if (workGallery) workGallery.style.transform = 'none';
       return;
     }
