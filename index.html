@@ -203,6 +203,8 @@
     #experience > div > div > div:first-child > div:first-child { min-height: 300px; }
     #experience [style*="display:flex;gap:48px"] { display: grid !important; grid-template-columns: repeat(3, 1fr); gap: 14px !important; }
     #gallery > div { max-width: 100% !important; }
+    /* Sticky positioning must use the page scroll container on iOS. */
+    #gallery { overflow: visible !important; }
     #gallery > div > div { gap: 34px !important; }
     #gallery [style*="grid-template-columns:2fr 1fr 1fr"] { grid-template-columns: 1fr 1fr !important; grid-template-rows: auto !important; gap: 10px !important; }
     #gallery [style*="grid-row:span 2"] { grid-column: 1 / -1; min-height: 300px; }
