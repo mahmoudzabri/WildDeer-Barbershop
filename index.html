@@ -101,30 +101,29 @@
     #navCta { display: none; }
     #navLinks { flex: 1; justify-content: space-evenly; gap: clamp(8px, 2vw, 24px) !important; }
   }
-  .work-scroll-container { height: 260vh; position: relative; }
-  .work-sticky { position: sticky; top: 0; height: 100svh; display: flex; align-items: center; overflow: hidden; }
-  .work-gallery { display: flex; gap: 30px; width: max-content; padding: 0 8vw; will-change: transform; }
+  /* A native scroll area is more reliable than tying the gallery to page scroll. */
+  .work-scroll-container {
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 8px 0 22px;
+    scrollbar-color: #b8956a rgba(20,18,17,0.14);
+    scrollbar-width: thin;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-x: contain;
+  }
+  .work-scroll-container::-webkit-scrollbar { height: 7px; }
+  .work-scroll-container::-webkit-scrollbar-track { background: rgba(20,18,17,0.14); border-radius: 99px; }
+  .work-scroll-container::-webkit-scrollbar-thumb { background: #b8956a; border-radius: 99px; }
+  .work-sticky { min-width: max-content; }
+  .work-gallery { display: flex; gap: 30px; width: max-content; padding: 0 8vw; scroll-snap-type: x proximity; }
   .work-card { flex: 0 0 min(400px, 78vw); height: min(500px, 70svh); border-radius: 12px; position: relative; overflow: hidden; background: var(--work-image) center / cover no-repeat; }
   .work-card::before { content: ""; position: absolute; inset: 0; background: linear-gradient(to bottom, transparent 52%, rgba(20,18,17,0.86)); }
   .work-card-content { position: absolute; left: 30px; right: 20px; bottom: 28px; z-index: 1; }
   .work-card-number { display: block; margin-bottom: 8px; color: #b8956a; font: 14px 'Courier New', monospace; }
   .work-card h3 { color: #f0ebe3; font: 600 28px 'Cormorant Garamond', serif; margin: 0; }
   .work-card-meta { display: block; margin-top: 5px; color: rgba(240,235,227,0.72); font: 10px 'Courier New', monospace; letter-spacing: 1px; text-transform: uppercase; }
-  @media (prefers-reduced-motion: reduce) {
-    .work-scroll-container { height: auto; }
-    .work-sticky { position: relative; height: auto; overflow-x: auto; padding: 70px 0; }
-    .work-gallery { transform: none !important; }
-  }
   @media (max-width: 760px) {
-    .work-scroll-container { height: 280vh; height: 280dvh; }
-    .work-sticky {
-      position: sticky;
-      top: 0;
-      height: 100vh;
-      height: 100dvh;
-      overflow: hidden;
-      padding: 0;
-    }
+    .work-scroll-container { padding: 8px 0 18px; }
     .work-gallery { gap: 14px; padding: 0 20px; }
     .work-card { flex-basis: min(78vw, 340px); height: min(62svh, 430px); }
     .work-card-content { left: 20px; bottom: 20px; }
@@ -468,42 +467,14 @@
   window.addEventListener('DOMContentLoaded', () => window.setTimeout(hidePreloader, 1080), { once: true });
   window.setTimeout(hidePreloader, 1500);
 
-  const workScroll = document.querySelector('.work-scroll-container');
-  const workSticky = document.querySelector('.work-sticky');
-  const workGallery = document.querySelector('.work-gallery');
   const heroVideo = document.querySelector('.hero-video');
   if (heroVideo) {
     heroVideo.defaultPlaybackRate = 0.9;
     heroVideo.playbackRate = 0.9;
     heroVideo.addEventListener('play', () => { heroVideo.playbackRate = 0.9; });
   }
-  let workFramePending = false;
-  function updateWorkGallery() {
-    if (!workScroll || !workSticky || !workGallery || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      if (workGallery) workGallery.style.transform = 'none';
-      return;
-    }
-    const maxScroll = workScroll.offsetHeight - workSticky.offsetHeight;
-    if (maxScroll <= 0) return;
-    const progress = Math.min(1, Math.max(0, -workScroll.getBoundingClientRect().top / maxScroll));
-    const distance = Math.max(0, workGallery.scrollWidth - window.innerWidth);
-    workGallery.style.transform = `translate3d(${-distance * progress}px, 0, 0)`;
-  }
-  function requestWorkGalleryUpdate() {
-    if (workFramePending) return;
-    workFramePending = true;
-    window.requestAnimationFrame(() => {
-      workFramePending = false;
-      updateWorkGallery();
-    });
-  }
-
   handleScroll();
-  updateWorkGallery();
   window.addEventListener('scroll', handleScroll, { passive: true });
-  window.addEventListener('scroll', requestWorkGalleryUpdate, { passive: true });
-  window.addEventListener('resize', requestWorkGalleryUpdate);
-  window.visualViewport?.addEventListener('resize', requestWorkGalleryUpdate);
 </script>
 </body>
 </html>
